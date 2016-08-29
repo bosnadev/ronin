@@ -1,0 +1,19 @@
+{
+  "name": "bosnadev/ronin",
+  "description": "Laravel ACL package. Roles & Permissions for the Laravel's native Auth",
+  "authors": [
+    {
+      "name": "Mirza Pasic",
+      "email": "mirza@bosnadev.com"
+    }
+  ],
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Bosnadev\\Ronin\\": "src/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
