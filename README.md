@@ -1,4 +1,4 @@
-# Laravel Ronin - missing ACL part of the Laravel's native Auth
+# Laravel Ronin - a missing part of the Laravel's ACL
 
 ### Table of Contents
 
