@@ -35,6 +35,8 @@ class RoninMigration extends Migration
             $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
 
+            $table->timestamps();
+
             $table->primary(['permission_id', 'role_id']);
         });
 
@@ -46,6 +48,8 @@ class RoninMigration extends Migration
             $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
+            $table->timestamps();
+
             $table->primary(['permission_id', 'user_id']);
         });
 
@@ -55,6 +59,8 @@ class RoninMigration extends Migration
 
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->timestamps();
 
             $table->primary(['role_id', 'user_id']);
         });

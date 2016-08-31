@@ -8,6 +8,8 @@ use Orchestra\Testbench\TestCase;
 
 abstract class RoninTestCase extends TestCase
 {
+    protected $user;
+
     /**
      * Setup the test environment.
      */
@@ -20,6 +22,10 @@ abstract class RoninTestCase extends TestCase
             '--realpath' => realpath(__DIR__.'/../database/migrations'),
         ]);
 
+
+        $this->createUserDatabaseSchema();
+
+        // Seeders
         $this->seed(\RoninSeeder::class);
     }
 
@@ -76,5 +82,10 @@ abstract class RoninTestCase extends TestCase
         file_put_contents($db, null);
 
         return $db;
+    }
+
+    protected function refreshUserInstance()
+    {
+        $this->user = User::find($this->user->id);
     }
 }
