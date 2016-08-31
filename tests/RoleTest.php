@@ -2,19 +2,30 @@
 
 namespace Bosnadev\Tests\Ronin;
 
-use App\Models\User;
 use Bosnadev\Ronin\Models\Permission;
 use Bosnadev\Ronin\Models\Role;
 use Bosnadev\Tests\Ronin\RoninTestCase as RTS;
 use Illuminate\Support\Str;
 use Mockery as m;
-use Carbon\Carbon;
 
 class RoleTest extends RTS
 {
     public function tearDown()
     {
         m::close();
+    }
+
+    public function testCreatingANewRole()
+    {
+        Role::create([
+            'name' => 'Editor',
+            'slug'  => 'editor'
+        ]);
+
+        $role = Role::find(2);
+
+        $this->assertEquals('Editor', $role->name);
+        $this->assertEquals('editor', $role->slug);
     }
 
     public function testPermissionRelationship()
