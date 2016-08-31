@@ -2,14 +2,27 @@
 
 namespace Bosnadev\Tests\Ronin;
 
-use Bosnadev\Ronin\Models\Permission;
-use Bosnadev\Ronin\Models\Role;
-use Bosnadev\Tests\Ronin\RoninTestCase as RTS;
-use Illuminate\Support\Str;
 use Mockery as m;
+use Illuminate\Support\Str;
+use Bosnadev\Ronin\Models\Role;
+use Bosnadev\Ronin\Models\Permission;
+use Bosnadev\Ronin\Traits\RolableTrait;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
+use Bosnadev\Tests\Ronin\RoninTestCase as TestCase;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class RoleTest extends RTS
+class RoleTest extends TestCase
 {
+    protected $user;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->user = User::first();
+    }
+
     public function tearDown()
     {
         m::close();
@@ -28,13 +41,50 @@ class RoleTest extends RTS
         $this->assertEquals('editor', $role->slug);
     }
 
+    public function testUserRoleRelationship()
+    {
+        $this->assertInstanceOf(BelongsToMany::class, $this->user->roles());
+    }
+
+    public function testUserHasRole()
+    {
+        $this->user->assignRole(1);
+
+        $this->refreshUserInstance();
+
+        $role = Role::find(1);
+        $this->assertTrue($this->user->hasRole($role));
+        $this->assertTrue($this->user->hasRole('artisan'));
+        $this->assertTrue($this->user->hasRole(['artisan']));
+        $this->assertFalse($this->user->hasRole(['artisans']));
+        $this->assertCount(1, $this->user->getRoles());
+    }
+
+    public function testIfUserHaveRoleWithAGivenSlug()
+    {
+        $this->user->assignRole(1);
+
+        $this->refreshUserInstance();
+
+        $role = Role::find(1);
+        $this->assertTrue($this->user->userRoleSlug($role->slug));
+    }
+
+    public function testAssigningRoleWhenNoRoleProvided()
+    {
+        $role = $this->user->assignRole();
+        $this->refreshUserInstance();
+
+        $this->assertFalse($role);
+    }
+
     public function testPermissionRelationship()
     {
         $role = new Role();
 
         $this->addMockConnection($role);
 
-        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsToMany::class, $role->permissions());
+        $this->assertInstanceOf(BelongsToMany::class, $role->permissions());
     }
 
     public function testUserModelGetterAndSetter()
@@ -85,4 +135,21 @@ class RoleTest extends RTS
         $model->getConnection()->shouldReceive('getQueryGrammar')->andReturn(m::mock('Illuminate\Database\Query\Grammars\Grammar'));
         $model->getConnection()->shouldReceive('getPostProcessor')->andReturn(m::mock('Illuminate\Database\Query\Processors\Processor'));
     }
+
+    protected function createUserDatabaseSchema()
+    {
+        $this->app['db']->connection()->getSchemaBuilder()->create('users', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+    }
+}
+
+class User extends Model
+{
+    use RolableTrait;
 }
