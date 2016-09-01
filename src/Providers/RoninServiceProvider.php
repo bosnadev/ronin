@@ -5,6 +5,8 @@ namespace Bosnadev\Ronin\Providers;
 use Bosnadev\Ronin\Ronin;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\ServiceProvider;
+use Bosnadev\Ronin\Contracts\Role as RoleContract;
+use Bosnadev\Ronin\Contracts\Permission as PermissionContract;
 
 class RoninServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,8 @@ class RoninServiceProvider extends ServiceProvider
             $auth = $app->make(Guard::class);
             return new Ronin($auth);
         });
+
+        $this->registerBindings();
     }
 
     protected function publishResources()
@@ -46,6 +50,12 @@ class RoninServiceProvider extends ServiceProvider
         $this->publishes([
             $database . '/seeds' => database_path('/seeds'),
         ], 'ronin-seeds');
+    }
+
+    protected function registerBindings()
+    {
+        $this->app->bind(RoleContract::class, config('ronin.roles.model'));
+        $this->app->bind(PermissionContract::class, config('ronin.permissions.model'));
     }
 
     /**

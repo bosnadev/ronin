@@ -27,6 +27,9 @@ abstract class RoninTestCase extends TestCase
 
         // Seeders
         $this->seed(\RoninSeeder::class);
+
+        // Set the User model for this Test Case
+        config(['ronin.users.model' => User::class]);
     }
 
     /**
