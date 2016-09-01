@@ -53,10 +53,12 @@ class RoleTest extends TestCase
         $this->refreshUserInstance();
 
         $role = Role::find(1);
-        $this->assertTrue($this->user->hasRole($role));
         $this->assertTrue($this->user->hasRole('artisan'));
-        $this->assertTrue($this->user->hasRole(['artisan']));
-        $this->assertFalse($this->user->hasRole(['artisans']));
+        $this->assertTrue($this->user->hasRole($role));
+        $this->assertFalse($this->user->hasRole(1));
+        $this->assertTrue($this->user->hasAnyRole(['artisan', 'artisans']));
+        $this->assertTrue($this->user->hasAnyRole([$role, 'artisans']));
+        $this->assertFalse($this->user->hasAnyRole(['artisans', 'editor']));
         $this->assertCount(1, $this->user->getRoles());
     }
 

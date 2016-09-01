@@ -43,28 +43,38 @@ trait RolableTrait
     }
 
     /**
-     * Check if the user has at least one of the provided roles
+     * Check if the user has the given role
      *
-     * @param string|array|Role $roles
+     * @param string|Role $role
      * @return bool
      */
-    public function hasRole($roles)
+    public function hasRole($role)
     {
-        if($roles instanceof Role)
-            return $this->userRoleSlug($roles->slug);
+        if($role instanceof Role)
+            return  $this->roles->contains('slug', $role->slug);
 
-        if(is_string($roles)) {
-            return $this->userRoleSlug($roles);
+        if(is_string($role)) {
+            return $this->roles->contains('slug', $role);
         }
 
-        if(is_array($roles)) {
-            foreach ($roles as $role) {
-                if($this->userRoleSlug($role))
-                    return true;
-            }
+        return false;
+    }
 
-            return false;
-        }
+    /**
+     * Check if the user has any of the given roles.
+     *
+     * @param array $roles
+     *
+     * @return bool
+     */
+    public function hasAnyRole(array $roles)
+    {
+        $hasRole = collect($roles)->filter(function ($role) {
+            if($this->hasRole($role))
+                return $role;
+        })->count();
+
+        return (bool) $hasRole;
     }
 
     /**
