@@ -6,8 +6,6 @@ use Mockery as m;
 use Illuminate\Support\Str;
 use Bosnadev\Ronin\Models\Role;
 use Bosnadev\Ronin\Models\Permission;
-use Bosnadev\Ronin\Traits\RolableTrait;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Bosnadev\Tests\Ronin\RoninTestCase as TestCase;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -46,6 +44,13 @@ class RoleTest extends TestCase
         $this->assertInstanceOf(BelongsToMany::class, $this->user->roles());
     }
 
+    public function testRoleUserRelationship()
+    {
+        $role = Role::first();
+
+        $this->assertInstanceOf(BelongsToMany::class, $role->users());
+    }
+
     public function testUserHasRole()
     {
         $this->user->assignRole(1);
@@ -82,7 +87,7 @@ class RoleTest extends TestCase
 
     public function testPermissionRelationship()
     {
-        $role = new Role();
+        $role = new \Bosnadev\Ronin\Models\Role();
 
         $this->addMockConnection($role);
 
@@ -149,9 +154,4 @@ class RoleTest extends TestCase
             $table->timestamps();
         });
     }
-}
-
-class User extends Model
-{
-    use RolableTrait;
 }

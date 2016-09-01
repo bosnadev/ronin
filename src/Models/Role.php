@@ -2,10 +2,10 @@
 
 namespace Bosnadev\Ronin\Models;
 
-use Bosnadev\Tests\Ronin\User;
 use Illuminate\Database\Eloquent\Model;
+use Bosnadev\Ronin\Contracts\Role as RoleContract;
 
-class Role extends Model
+class Role extends Model implements RoleContract
 {
     protected $fillable = [
         'name', 'slug', 'description'
@@ -25,9 +25,14 @@ class Role extends Model
         return $this->belongsToMany(Permission::class);
     }
 
+    /**
+     * A role can be granted to may users
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function users()
     {
-        return $this->belongsToMany(app(config('auth.model')) ?: app(config('auth.providers.users.model')))->withTimestamps();
+        return $this->belongsToMany(app(config('ronin.users.model')))->withTimestamps();
     }
 
     /**
