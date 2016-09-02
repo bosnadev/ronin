@@ -22,6 +22,10 @@ class RoninServiceProvider extends ServiceProvider
             return new Ronin($auth);
         });
 
+        // Merge Ronin's with the users defined configuration
+        $this->mergeConfigFrom(__DIR__ . '/../../config/ronin.php', 'ronin');
+
+        // Register Ronin's bindings (models, repositories etc.)
         $this->registerBindings();
     }
 
@@ -32,9 +36,6 @@ class RoninServiceProvider extends ServiceProvider
 
         // Ronin database path
         $database = realpath(__DIR__ . '/../../database');
-
-        // Merge Ronin's with the users defined configuration
-        $this->mergeConfigFrom($config, 'ronin');
 
         // Publish configuration
         $this->publishes([
