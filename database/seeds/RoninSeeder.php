@@ -12,6 +12,7 @@ class RoninSeeder extends Seeder
     public function run()
     {
         $this->rolesSeeder();
+        $this->permissionSeeder();
         $this->usersSeeder();
     }
 
@@ -33,6 +34,28 @@ class RoninSeeder extends Seeder
             'name'      => 'Laravel Artisan',
             'email'     => 'laravel@artisan.email',
             'password'  => bcrypt('secret')
+        ]);
+    }
+
+    protected function permissionSeeder()
+    {
+        \DB::table('permissions')->insert([
+            [
+                'name' => 'Edit',
+                'slug' => 'edit'
+            ],
+            [
+                'name' => 'Create',
+                'slug' => 'create'
+            ],
+            [
+                'name' => 'Delete',
+                'slug' => 'delete'
+            ],
+            [
+                'name' => 'Search',
+                'slug' => 'search'
+            ]
         ]);
     }
 }

@@ -2,13 +2,18 @@
 
 namespace Bosnadev\Tests\Ronin;
 
+use Bosnadev\Ronin\Models\Permission;
+use Bosnadev\Ronin\Models\Role;
 use Bosnadev\Ronin\Providers\RoninServiceProvider;
+use Illuminate\Database\Schema\Blueprint;
 use Mockery as m;
 use Orchestra\Testbench\TestCase;
 
 abstract class RoninTestCase extends TestCase
 {
     protected $user;
+    protected $roles;
+    protected $permissions;
 
     /**
      * Setup the test environment.
@@ -22,7 +27,6 @@ abstract class RoninTestCase extends TestCase
             '--realpath' => realpath(__DIR__.'/../database/migrations'),
         ]);
 
-
         $this->createUserDatabaseSchema();
 
         // Seeders
@@ -30,6 +34,11 @@ abstract class RoninTestCase extends TestCase
 
         // Set the User model for this Test Case
         config(['ronin.users.model' => User::class]);
+
+        // Test data
+        $this->user = User::first();
+        $this->roles = Role::first();
+        $this->permissions = Permission::first();
     }
 
     /**
@@ -62,7 +71,7 @@ abstract class RoninTestCase extends TestCase
     }
 
     /**
-     * WE can use in memory database or standard SQLite DB
+     * We can use in memory database or standard SQLite DB
      *
      * @return mixed|string
      */
@@ -87,8 +96,26 @@ abstract class RoninTestCase extends TestCase
         return $db;
     }
 
+    /**
+     * Refresh test user
+     */
     protected function refreshUserInstance()
     {
         $this->user = User::find($this->user->id);
+    }
+
+    /**
+     * Create Laravel's default users table
+     */
+    protected function createUserDatabaseSchema()
+    {
+        $this->app['db']->connection()->getSchemaBuilder()->create('users', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
+        });
     }
 }

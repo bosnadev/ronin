@@ -5,10 +5,10 @@ namespace Bosnadev\Ronin\Traits;
 use Bosnadev\Ronin\Models\Role;
 
 /**
- * Class RolableTrait
+ * Class Rolable
  * @package Bosnadev\Ronin\Traits
  */
-trait RolableTrait
+trait Rolable
 {
     /**
      * @return mixed
