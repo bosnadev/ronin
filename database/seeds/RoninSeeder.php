@@ -12,7 +12,7 @@ class RoninSeeder extends Seeder
     public function run()
     {
         $this->rolesSeeder();
-        $this->permissionSeeder();
+        $this->permissionsSeeder();
         $this->usersSeeder();
     }
 
@@ -37,7 +37,7 @@ class RoninSeeder extends Seeder
         ]);
     }
 
-    protected function permissionSeeder()
+    protected function permissionsSeeder()
     {
         \DB::table('permissions')->insert([
             [

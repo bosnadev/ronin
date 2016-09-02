@@ -12,8 +12,8 @@ use Orchestra\Testbench\TestCase;
 abstract class RoninTestCase extends TestCase
 {
     protected $user;
-    protected $roles;
-    protected $permissions;
+    protected $role;
+    protected $permission;
 
     /**
      * Setup the test environment.
@@ -37,8 +37,8 @@ abstract class RoninTestCase extends TestCase
 
         // Test data
         $this->user = User::first();
-        $this->roles = Role::first();
-        $this->permissions = Permission::first();
+        $this->role = Role::first();
+        $this->permission = Permission::first();
     }
 
     /**
@@ -102,6 +102,16 @@ abstract class RoninTestCase extends TestCase
     protected function refreshUserInstance()
     {
         $this->user = User::find($this->user->id);
+    }
+
+    protected function refreshRoleInstance()
+    {
+        $this->role = Role::first();
+    }
+
+    protected function refreshPermissionInstance()
+    {
+        $this->permission = Permission::first();
     }
 
     /**

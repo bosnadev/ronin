@@ -15,13 +15,13 @@ class PermissionTest extends TestCase
 
     public function testPermissionUserRelationship()
     {
-        $this->assertInstanceOf(BelongsToMany::class, $this->permissions->users());
-        $this->assertInstanceOf(EloquentCollection::class, $this->permissions->users()->get());
+        $this->assertInstanceOf(BelongsToMany::class, $this->permission->users());
+        $this->assertInstanceOf(EloquentCollection::class, $this->permission->users()->get());
     }
 
     public function testPermissionRoleRelationship()
     {
-        $this->assertInstanceof(BelongsToMany::class, $this->permissions->roles());
-        $this->assertInstanceOf(EloquentCollection::class, $this->permissions->roles()->get());
+        $this->assertInstanceof(BelongsToMany::class, $this->permission->roles());
+        $this->assertInstanceOf(EloquentCollection::class, $this->permission->roles()->get());
     }
 }

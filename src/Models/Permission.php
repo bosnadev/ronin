@@ -46,4 +46,9 @@ class Permission extends Model implements PermissionContract
     {
         return $this->belongsToMany(app(config('ronin.users.model')) ?: app(config('auth.providers.users.model')))->withTimestamps();
     }
+
+    public static function findBySlug($slug)
+    {
+        return static::where('slug', strtolower($slug))->first();
+    }
 }
