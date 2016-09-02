@@ -4,9 +4,9 @@ namespace Bosnadev\Tests\Ronin;
 
 
 use Illuminate\Database\Eloquent\Model;
-use Bosnadev\Ronin\Traits\RolableTrait;
+use Bosnadev\Ronin\Traits\Rolable;
 
 class User extends Model
 {
-    use RolableTrait;
+    use Rolable;
 }
