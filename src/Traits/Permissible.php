@@ -33,11 +33,10 @@ trait Permissible
         if(is_string($permission)) {
             $permission = $this->permissionExists($permission);
 
-            if(! $permission)
-                return false;
+            return $this->permissions->contains($permission);
         }
 
-        return $this->permissions->contains($permission);
+        return false;
     }
 
     protected function permissionExists($permission)

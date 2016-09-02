@@ -2,6 +2,7 @@
 
 namespace Bosnadev\Ronin\Models;
 
+use Bosnadev\Ronin\Exceptions\PermissionNotFound;
 use Illuminate\Database\Eloquent\Model;
 use Bosnadev\Ronin\Contracts\Permission as PermissionContract;
 
@@ -47,8 +48,28 @@ class Permission extends Model implements PermissionContract
         return $this->belongsToMany(app(config('ronin.users.model')) ?: app(config('auth.providers.users.model')))->withTimestamps();
     }
 
+    public static function findById($id)
+    {
+        return static::findBy('id', $id);
+    }
+
+    public static function findByName($name)
+    {
+        return static::findBy('name', $name);
+    }
+
     public static function findBySlug($slug)
     {
-        return static::where('slug', strtolower($slug))->first();
+        return static::findBy('slug', strtolower($slug));
+    }
+
+    protected static function findBy($attribute, $value)
+    {
+        $permission = static::where($attribute, $value)->first();
+
+        if(! $permission)
+            throw new PermissionNotFound;
+
+        return $permission;
     }
 }
