@@ -2,6 +2,7 @@
 
 namespace Bosnadev\Ronin\Models;
 
+use Bosnadev\Ronin\Traits\Permissible;
 use Illuminate\Database\Eloquent\Model;
 use Bosnadev\Ronin\Contracts\Role as RoleContract;
 
