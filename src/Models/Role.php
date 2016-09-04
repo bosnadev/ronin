@@ -5,6 +5,7 @@ namespace Bosnadev\Ronin\Models;
 use Bosnadev\Ronin\Traits\Permissible;
 use Illuminate\Database\Eloquent\Model;
 use Bosnadev\Ronin\Contracts\Role as RoleContract;
+use Bosnadev\Ronin\Contracts\Permission as PermissionContract;
 
 class Role extends Model implements RoleContract
 {
@@ -25,7 +26,7 @@ class Role extends Model implements RoleContract
      */
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class);
+        return $this->belongsToMany(app(PermissionContract::class))->withTimestamps();
     }
 
     /**

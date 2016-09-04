@@ -2,11 +2,14 @@
 
 namespace Bosnadev\Ronin\Traits;
 
-use Bosnadev\Ronin\Models\Permission;
 use Bosnadev\Ronin\Contracts\Permission as PermissionContract;
 
 trait Permissible
 {
+    public function permissions()
+    {
+        return $this->belongsToMany(app(PermissionContract::class))->withTimestamps()->withPivot('granted');
+    }
     /**
      * Grant the provided Permissions to a Role
      *
@@ -28,15 +31,43 @@ trait Permissible
         $this->permissions()->saveMany($permissions);
     }
 
-    public function can($permission)
+    public function hasPermission($permission)
     {
-        if(is_string($permission)) {
-            $permission = $this->permissionExists($permission);
+        if(is_array($permission))
+            return false;
 
-            return $this->permissions->contains($permission);
+        if(is_string($permission)) {
+            // Get permission if exists, if not throw an exception
+            $permission = $this->permissionExists($permission);
         }
 
-        return false;
+        return (
+            ($this->hasValidDirectPermission($permission) || $this->hasRolePermission($permission))
+            && ! $this->hasInvalidDirectPermission($permission)
+        );
+    }
+
+    /**
+     * Test if a role has given permission
+     *
+     * @param Permission $permission
+     * @return
+     */
+    protected function hasRolePermission(PermissionContract $permission)
+    {
+        return $this->hasRole($permission->roles);
+    }
+
+    protected function hasValidDirectPermission(PermissionContract $permission)
+    {
+    }
+
+    protected function hasInvalidDirectPermission(PermissionContract $permission)
+    {
+    }
+
+    public function hasAllPermissions($permissions)
+    {
     }
 
     protected function permissionExists($permission)

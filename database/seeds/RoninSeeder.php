@@ -22,9 +22,16 @@ class RoninSeeder extends Seeder
     protected function rolesSeeder()
     {
         \DB::table('roles')->insert([
-            'name'  => 'Artisan',
-            'slug'  => 'artisan',
-            'description'   => 'Only for the Laravel Artisans'
+            [
+                'name'          => 'Artisan',
+                'slug'          => 'artisan',
+                'description'   => 'Only for the Laravel Artisans'
+            ],
+            [
+                'name'          => 'Editor',
+                'slug'          => 'editor',
+                'description'   => 'This is an Editor\'s role'
+            ]
         ]);
     }
 
