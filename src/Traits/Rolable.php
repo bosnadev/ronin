@@ -2,8 +2,8 @@
 
 namespace Bosnadev\Ronin\Traits;
 
-use Bosnadev\Ronin\Contracts\Role;
-use Bosnadev\Ronin\Contracts\Scope;
+use Bosnadev\Ronin\Contracts\Role as RoleContract;
+use Illuminate\Support\Collection;
 
 /**
  * Class Rolable
@@ -16,7 +16,7 @@ trait Rolable
      */
     public function roles()
     {
-        return $this->belongsToMany(app(Role::class))->withTimestamps();
+        return $this->belongsToMany(app(RoleContract::class))->withTimestamps();
     }
 
     /**
@@ -46,12 +46,12 @@ trait Rolable
     /**
      * Check if the user has the given role
      *
-     * @param string|Role $role
+     * @param string|array|\Bosnadev\Ronin\Contracts\Role $roles
      * @return bool
      */
     public function hasRole($roles)
     {
-        if($roles instanceof Role) {
+        if($roles instanceof RoleContract) {
             return  $this->roles->contains('id', $roles->id);
         }
 
@@ -64,10 +64,13 @@ trait Rolable
                 if($this->hasRole($role))
                     return true;
             }
-            return false;
         }
 
-        return (bool) $roles->intersect($this->roles)->count();
+        if(is_int($roles)) {
+            return  $this->roles->contains('id', $roles);
+        }
+
+        return (bool) $roles->intersect($this->getRoles())->count();
     }
 
     /**

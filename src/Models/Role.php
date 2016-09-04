@@ -38,4 +38,9 @@ class Role extends Model implements RoleContract
     {
         return $this->belongsToMany(app(config('ronin.users.model')))->withTimestamps();
     }
+
+    public function getSlug()
+    {
+        return $this->slug;
+    }
 }
