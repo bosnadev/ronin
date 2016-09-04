@@ -61,7 +61,7 @@ trait Scopable
         $user = app(config('ronin.users.model'));
 
         if($this instanceof $user) {
-            return $this->hasRole($scope->roles->all());
+            return $this->hasRole($scope->roles);
         }
 
         return false;

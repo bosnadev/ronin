@@ -31,11 +31,13 @@ class RolableTest extends TestCase
         $role = Role::find(1);
         $this->assertTrue($this->user->hasRole('artisan'));
         $this->assertTrue($this->user->hasRole($role));
-        $this->assertFalse($this->user->hasRole(1));
+        $this->assertTrue($this->user->hasRole(1));
+        $this->assertFalse($this->user->hasRole(3));
         $this->assertTrue($this->user->hasAnyRole(['artisan', 'artisans']));
         $this->assertTrue($this->user->hasAnyRole([$role, 'artisans']));
         $this->assertFalse($this->user->hasAnyRole(['artisans', 'editor']));
         $this->assertCount(1, $this->user->getRoles());
+        $this->assertEquals('artisan', $this->user->roles->first()->getSlug());
     }
 
     public function testIfUserHaveRoleWithAGivenSlug()
