@@ -2,14 +2,14 @@
 
 namespace Bosnadev\Ronin\Models;
 
-use Bosnadev\Ronin\Traits\Permissible;
+use Bosnadev\Ronin\Traits\Scopable;
 use Illuminate\Database\Eloquent\Model;
 use Bosnadev\Ronin\Contracts\Role as RoleContract;
-use Bosnadev\Ronin\Contracts\Permission as PermissionContract;
+use Bosnadev\Ronin\Contracts\Scope as ScopeContract;
 
 class Role extends Model implements RoleContract
 {
-    use Permissible;
+    use Scopable;
 
     protected $fillable = [
         'name', 'slug', 'description'
@@ -17,16 +17,16 @@ class Role extends Model implements RoleContract
 
     static $userModel;
 
-    static $permissionModel;
+    static $scopeModel;
 
     /**
-     * A Role can have multiple permissions
+     * A Role can be assigned with scopes
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function permissions()
+    public function scopes()
     {
-        return $this->belongsToMany(app(PermissionContract::class))->withTimestamps();
+        return $this->belongsToMany(app(ScopeContract::class))->withTimestamps()->withPivot('granted');
     }
 
     /**

@@ -5,7 +5,7 @@ namespace Bosnadev\Tests\Ronin;
 use Mockery as m;
 use Illuminate\Support\Str;
 use Bosnadev\Ronin\Models\Role;
-use Bosnadev\Ronin\Models\Permission;
+use Bosnadev\Ronin\Models\Scope;
 use Bosnadev\Tests\Ronin\RoninTestCase as TestCase;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -38,14 +38,14 @@ class RoleTest extends TestCase
         $this->assertInstanceOf(BelongsToMany::class, $role->users());
     }
 
-    public function testPermissionRelationship()
+    public function testScopeRelationship()
     {
         $role = Role::first();
 
-        $this->assertInstanceOf(BelongsToMany::class, $role->permissions());
+        $this->assertInstanceOf(BelongsToMany::class, $role->scopes());
     }
 
-    public function testAddingNewRoleAndPermissions()
+    public function testAddingNewRoleAndScopes()
     {
         $role = $this->mockRole(Role::class);
 

@@ -20,7 +20,7 @@ class RoninMigration extends Migration
             $table->timestamps();
         });
 
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('scopes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('slug')->unique();
@@ -28,30 +28,30 @@ class RoninMigration extends Migration
             $table->timestamps();
         });
 
-        Schema::create('permission_role', function (Blueprint $table) {
-            $table->integer('permission_id')->unsigned();
+        Schema::create('role_scope', function (Blueprint $table) {
+            $table->integer('scope_id')->unsigned();
             $table->integer('role_id')->unsigned();
             $table->boolean('granted')->default(true);
 
-            $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
+            $table->foreign('scope_id')->references('id')->on('scopes')->onDelete('cascade');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
 
             $table->timestamps();
 
-            $table->primary(['permission_id', 'role_id']);
+            $table->primary(['scope_id', 'role_id']);
         });
 
-        Schema::create('permission_user', function (Blueprint $table) {
-            $table->integer('permission_id')->unsigned();
+        Schema::create('scope_user', function (Blueprint $table) {
+            $table->integer('scope_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->boolean('granted')->default(true);
 
-            $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
+            $table->foreign('scope_id')->references('id')->on('scopes')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
 
-            $table->primary(['permission_id', 'user_id']);
+            $table->primary(['scope_id', 'user_id']);
         });
 
         Schema::create('role_user', function (Blueprint $table) {
@@ -74,10 +74,10 @@ class RoninMigration extends Migration
      */
     public function down()
     {
-        Schema::drop('permission_role');
-        Schema::drop('permission_user');
+        Schema::drop('role_scope');
+        Schema::drop('scope_user');
         Schema::drop('role_user');
         Schema::drop('roles');
-        Schema::drop('permissions');
+        Schema::drop('scopes');
     }
 }

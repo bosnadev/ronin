@@ -2,17 +2,17 @@
 
 namespace Bosnadev\Ronin\Contracts;
 
-interface Permission
+interface Scope
 {
     /**
-     * A Permission can be assigned to multiple Roles
+     * A Scope can be assigned to multiple Roles
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles();
 
     /**
-     * A permission can be granted to may users
+     * A scope can be granted to may users
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

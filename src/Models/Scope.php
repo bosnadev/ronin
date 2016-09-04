@@ -2,11 +2,11 @@
 
 namespace Bosnadev\Ronin\Models;
 
-use Bosnadev\Ronin\Exceptions\PermissionNotFound;
 use Illuminate\Database\Eloquent\Model;
-use Bosnadev\Ronin\Contracts\Permission as PermissionContract;
+use Bosnadev\Ronin\Exceptions\ScopeNotFound;
+use Bosnadev\Ronin\Contracts\Scope as ScopeContract;
 
-class Permission extends Model implements PermissionContract
+class Scope extends Model implements ScopeContract
 {
     /**
      * The primary key for the model.
@@ -25,27 +25,27 @@ class Permission extends Model implements PermissionContract
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('ronin.permissions.table');
+        $this->table = config('ronin.scopes.table');
     }
 
     /**
-     * A Permission can be assigned to multiple Roles
+     * A Scope can be assigned to multiple Roles
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class)->withTimestamps()->withPivot('granted');
     }
 
     /**
-     * A permission can be granted to may users
+     * A Scope can be granted to may users
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users()
     {
-        return $this->belongsToMany(app(config('ronin.users.model')) ?: app(config('auth.providers.users.model')))->withTimestamps();
+        return $this->belongsToMany(app(config('ronin.users.model')))->withTimestamps();
     }
 
     public static function findById($id)
@@ -63,13 +63,20 @@ class Permission extends Model implements PermissionContract
         return static::findBy('slug', strtolower($slug));
     }
 
+    /**
+     * Generic findBy method
+     *
+     * @param $attribute
+     * @param $value
+     * @return mixed
+     */
     protected static function findBy($attribute, $value)
     {
-        $permission = static::where($attribute, $value)->first();
+        $scope = static::where($attribute, $value)->first();
 
-        if(! $permission)
-            throw new PermissionNotFound;
+        if(! $scope)
+            throw new ScopeNotFound;
 
-        return $permission;
+        return $scope;
     }
 }
