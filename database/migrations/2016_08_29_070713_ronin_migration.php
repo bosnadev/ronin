@@ -31,6 +31,7 @@ class RoninMigration extends Migration
         Schema::create('permission_role', function (Blueprint $table) {
             $table->integer('permission_id')->unsigned();
             $table->integer('role_id')->unsigned();
+            $table->boolean('granted')->default(true);
 
             $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
@@ -43,7 +44,7 @@ class RoninMigration extends Migration
         Schema::create('permission_user', function (Blueprint $table) {
             $table->integer('permission_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->boolean('granted');
+            $table->boolean('granted')->default(true);
 
             $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

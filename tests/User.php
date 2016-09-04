@@ -3,10 +3,11 @@
 namespace Bosnadev\Tests\Ronin;
 
 
-use Illuminate\Database\Eloquent\Model;
 use Bosnadev\Ronin\Traits\Rolable;
+use Bosnadev\Ronin\Traits\Permissible;
+use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    use Rolable;
+    use Rolable, Permissible;
 }

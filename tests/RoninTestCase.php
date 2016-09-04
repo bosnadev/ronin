@@ -38,6 +38,7 @@ abstract class RoninTestCase extends TestCase
         // Test data
         $this->user = User::first();
         $this->role = Role::first();
+        $this->role2 = Role::find(2);
         $this->permission = Permission::first();
     }
 
@@ -107,6 +108,7 @@ abstract class RoninTestCase extends TestCase
     protected function refreshRoleInstance()
     {
         $this->role = Role::first();
+        $this->role2 = Role::find(2);
     }
 
     protected function refreshPermissionInstance()

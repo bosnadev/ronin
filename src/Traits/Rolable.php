@@ -63,11 +63,11 @@ trait Rolable
     /**
      * Check if the user has any of the given roles.
      *
-     * @param array $roles
+     * @param $roles
      *
      * @return bool
      */
-    public function hasAnyRole(array $roles)
+    public function hasAnyRole($roles)
     {
         $hasRole = collect($roles)->filter(function ($role) {
             if($this->hasRole($role))

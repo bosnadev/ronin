@@ -19,16 +19,16 @@ class RoleTest extends TestCase
     public function testCreatingANewRole()
     {
         Role::create([
-            'name' => 'Editor',
-            'slug'  => 'editor'
+            'name' => 'Publisher',
+            'slug'  => 'publisher'
         ]);
 
-        $role = Role::find(2);
+        $role = Role::find(3);
 
-        $this->assertEquals('Editor', $role->name);
-        $this->assertEquals('editor', $role->slug);
-        $this->seeInDatabase('roles', ['slug' => 'editor']);
-        $this->dontSeeInDatabase('roles', ['sllug' => 'editors']);
+        $this->assertEquals('Publisher', $role->name);
+        $this->assertEquals('publisher', $role->slug);
+        $this->seeInDatabase('roles', ['slug' => 'publisher']);
+        $this->dontSeeInDatabase('roles', ['slug' => 'publishers']);
     }
 
     public function testRoleUserRelationship()
