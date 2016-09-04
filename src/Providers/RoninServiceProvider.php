@@ -6,7 +6,7 @@ use Bosnadev\Ronin\Ronin;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\ServiceProvider;
 use Bosnadev\Ronin\Contracts\Role as RoleContract;
-use Bosnadev\Ronin\Contracts\Permission as PermissionContract;
+use Bosnadev\Ronin\Contracts\Scope as ScopeContract;
 
 class RoninServiceProvider extends ServiceProvider
 {
@@ -56,7 +56,7 @@ class RoninServiceProvider extends ServiceProvider
     protected function registerBindings()
     {
         $this->app->bind(RoleContract::class, config('ronin.roles.model'));
-        $this->app->bind(PermissionContract::class, config('ronin.permissions.model'));
+        $this->app->bind(ScopeContract::class, config('ronin.scopes.model'));
     }
 
     /**

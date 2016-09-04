@@ -2,18 +2,19 @@
 
 namespace Bosnadev\Tests\Ronin;
 
-use Bosnadev\Ronin\Models\Permission;
+use Mockery as m;
 use Bosnadev\Ronin\Models\Role;
+use Bosnadev\Ronin\Models\Scope;
+use Orchestra\Testbench\TestCase;
 use Bosnadev\Ronin\Providers\RoninServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
-use Mockery as m;
-use Orchestra\Testbench\TestCase;
 
 abstract class RoninTestCase extends TestCase
 {
     protected $user;
     protected $role;
-    protected $permission;
+    protected $role2;
+    protected $scope;
 
     /**
      * Setup the test environment.
@@ -39,7 +40,7 @@ abstract class RoninTestCase extends TestCase
         $this->user = User::first();
         $this->role = Role::first();
         $this->role2 = Role::find(2);
-        $this->permission = Permission::first();
+        $this->scope = Scope::first();
     }
 
     /**
@@ -111,9 +112,9 @@ abstract class RoninTestCase extends TestCase
         $this->role2 = Role::find(2);
     }
 
-    protected function refreshPermissionInstance()
+    protected function refreshScopeInstance()
     {
-        $this->permission = Permission::first();
+        $this->scope = Scope::first();
     }
 
     /**

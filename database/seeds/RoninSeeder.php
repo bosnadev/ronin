@@ -46,7 +46,7 @@ class RoninSeeder extends Seeder
 
     protected function permissionsSeeder()
     {
-        \DB::table('permissions')->insert([
+        \DB::table('scopes')->insert([
             [
                 'name' => 'Edit',
                 'slug' => 'edit'

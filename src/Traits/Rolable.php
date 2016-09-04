@@ -2,7 +2,8 @@
 
 namespace Bosnadev\Ronin\Traits;
 
-use Bosnadev\Ronin\Models\Role;
+use Bosnadev\Ronin\Contracts\Role;
+use Bosnadev\Ronin\Contracts\Scope;
 
 /**
  * Class Rolable
@@ -48,16 +49,25 @@ trait Rolable
      * @param string|Role $role
      * @return bool
      */
-    public function hasRole($role)
+    public function hasRole($roles)
     {
-        if($role instanceof Role)
-            return  $this->roles->contains('slug', $role->slug);
-
-        if(is_string($role)) {
-            return $this->roles->contains('slug', $role);
+        if($roles instanceof Role) {
+            return  $this->roles->contains('id', $roles->id);
         }
 
-        return false;
+        if(is_string($roles)) {
+            return $this->roles->contains('slug', $roles);
+        }
+
+        if(is_array($roles)) {
+            foreach ($roles as $role) {
+                if($this->hasRole($role))
+                    return true;
+            }
+            return false;
+        }
+
+        return (bool) $roles->intersect($this->roles)->count();
     }
 
     /**

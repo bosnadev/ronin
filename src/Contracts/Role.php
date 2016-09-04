@@ -5,11 +5,11 @@ namespace Bosnadev\Ronin\Contracts;
 interface Role
 {
     /**
-     * A Role can have multiple permissions
+     * Multiple scopes can be added to a Role
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function permissions();
+    public function scopes();
 
     /**
      * A role can be granted to may users

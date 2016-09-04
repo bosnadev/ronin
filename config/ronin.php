@@ -17,7 +17,7 @@ return [
         'model' => Bosnadev\Ronin\Models\Role::class,
     ],
 
-    'permissions' => [
-        'model' => Bosnadev\Ronin\Models\Permission::class
+    'scopes' => [
+        'model' => Bosnadev\Ronin\Models\Scope::class
     ]
 ];
