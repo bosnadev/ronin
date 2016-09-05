@@ -76,10 +76,6 @@ trait Scopable
     {
     }
 
-    public function hasAllScopes($scopes)
-    {
-    }
-
     protected function scopeExists($scope)
     {
         return app(Scope::class)->findBySlug($scope);
