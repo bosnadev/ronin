@@ -2,7 +2,6 @@
 
 namespace Bosnadev\Tests\Ronin;
 
-use Bosnadev\Ronin\Exceptions\NoRoleProvidedException;
 use Bosnadev\Ronin\Exceptions\RoleNotFoundException;
 use Bosnadev\Ronin\Models\Role;
 use Bosnadev\Tests\Ronin\RoninTestCase as TestCase;
@@ -52,7 +51,7 @@ class RolableTest extends TestCase
         $this->assertTrue($this->user->userRoleSlug($role->slug));
     }
 
-    public function testWhatHappensWhenWeTryToAssignNonExistingRole()
+    public function testWhatHappensWhenWeTryToAssignNonExistingRoleSlug()
     {
         $this->expectException(RoleNotFoundException::class);
         $this->user->assignRole('role');
@@ -60,6 +59,16 @@ class RolableTest extends TestCase
         $this->refreshUserInstance();
 
         $this->assertFalse($this->user->hasRole('role'));
+    }
+
+    public function testWhatHappensWhenWeTryToAssignNonExistingRoleId()
+    {
+        $this->expectException(RoleNotFoundException::class);
+        $this->user->assignRole(15);
+
+        $this->refreshUserInstance();
+
+        $this->assertFalse($this->user->hasRole(15));
     }
 
     public function testAssigningRoleWithRoleId()
@@ -102,6 +111,17 @@ class RolableTest extends TestCase
         $this->assertFalse($this->user->hasRole('admin'));
     }
 
+    public function testAssigningMultipleRoleInstancesAtOnce()
+    {
+        $this->user->assignRole($this->role, $this->role2);
+
+        $this->refreshUserInstance();
+
+        $this->assertTrue($this->user->hasRole('editor'));
+        $this->assertTrue($this->user->hasRole('artisan'));
+        $this->assertFalse($this->user->hasRole('admin'));
+    }
+
     public function testAssigningMultipleRolesAtOnceViaArray()
     {
         $this->user->assignRole(['editor', 'artisan']);
@@ -122,5 +142,21 @@ class RolableTest extends TestCase
         $this->assertTrue($this->user->hasRole('editor'));
         $this->assertTrue($this->user->hasRole('artisan'));
         $this->assertFalse($this->user->hasRole('admin'));
+    }
+
+    public function testCheckIfUserHasRoleAfterRevokingIt()
+    {
+        $this->user->assignRole('artisan');
+        $this->refreshUserInstance();
+
+        // make sure that user has a role
+        $this->assertTrue($this->user->hasRole('artisan'));
+
+        // Remove user from the role
+        $this->user->revokeRole('artisan');
+        $this->refreshUserInstance();
+
+        // make sure we removed the role from the user
+        $this->assertFalse($this->user->hasRole('artisan'));
     }
 }
