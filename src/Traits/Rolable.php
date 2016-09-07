@@ -47,6 +47,11 @@ trait Rolable
         return $this;
     }
 
+    public function revokeRole($role)
+    {
+        $this->roles()->detach($this->getRoleIfExists($role));
+    }
+
     /**
      * Check if the user has the given role
      *

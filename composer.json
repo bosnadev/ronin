@@ -31,7 +31,9 @@
     }
   },
   "scripts": {
-    "test": "vendor/bin/phpunit"
+    "test": "vendor/bin/phpunit",
+    "coverage": "vendor/bin/phpunit --coverage-text",
+    "report": "vendor/bin/phpunit --coverage-html ./report"
   },
   "minimum-stability": "dev",
   "prefer-stable": true
