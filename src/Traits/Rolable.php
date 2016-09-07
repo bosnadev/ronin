@@ -3,6 +3,7 @@
 namespace Bosnadev\Ronin\Traits;
 
 use Bosnadev\Ronin\Contracts\Role as RoleContract;
+use Bosnadev\Ronin\Exceptions\NoRoleProvidedException;
 use Illuminate\Support\Collection;
 
 /**
@@ -30,14 +31,17 @@ trait Rolable
     /**
      * Assign the given role to the user
      *
-     * @param null $roleId
+     * @param int|string|\Bosnadev\Ronin\Contracts\Role $role
      * @return bool
      */
-    public function assignRole($roleId = null)
+    public function assignRole($role = null)
     {
+        if(is_null($role))
+            throw new NoRoleProvidedException('You need to provide a role identifier to assign a new role.');
+
         // Check if user already has this role
-        if(! $this->roles->contains($roleId) && !is_null($roleId)) {
-            return $this->roles()->attach($roleId);
+        if(! $this->roles->contains($role)) {
+            return $this->roles()->attach($role);
         }
 
         return false;
