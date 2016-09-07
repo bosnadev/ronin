@@ -2,6 +2,7 @@
 
 namespace Bosnadev\Ronin\Models;
 
+use Bosnadev\Ronin\Exceptions\RoleNotFoundException;
 use Bosnadev\Ronin\Traits\Scopable;
 use Illuminate\Database\Eloquent\Model;
 use Bosnadev\Ronin\Contracts\Role as RoleContract;
@@ -39,8 +40,45 @@ class Role extends Model implements RoleContract
         return $this->belongsToMany(app(config('ronin.users.model')))->withTimestamps();
     }
 
+    /**
+     * Get Role slug
+     *
+     * @return mixed
+     */
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Get Role ID
+     *
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public static function findBySlug($slug)
+    {
+        $role = static::where('slug', $slug)->first();
+
+        if(! $role) {
+            throw new RoleNotFoundException();
+        }
+
+        return $role;
+    }
+
+    public function findById($id)
+    {
+        $role = static::where('id', $id)->first();
+
+        if(! $role) {
+            throw new RoleNotFoundException();
+        }
+
+        return $role;
     }
 }
