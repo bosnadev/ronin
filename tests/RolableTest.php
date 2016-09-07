@@ -3,6 +3,7 @@
 namespace Bosnadev\Tests\Ronin;
 
 use Bosnadev\Ronin\Exceptions\NoRoleProvidedException;
+use Bosnadev\Ronin\Exceptions\RoleNotFoundException;
 use Bosnadev\Ronin\Models\Role;
 use Bosnadev\Tests\Ronin\RoninTestCase as TestCase;
 use Illuminate\Database\Eloquent\Collection;
@@ -51,22 +52,75 @@ class RolableTest extends TestCase
         $this->assertTrue($this->user->userRoleSlug($role->slug));
     }
 
-    public function testAssigningRoleWhenNoRoleProvided()
+    public function testWhatHappensWhenWeTryToAssignNonExistingRole()
     {
-        $this->expectException(NoRoleProvidedException::class);
-        $role = $this->user->assignRole();
+        $this->expectException(RoleNotFoundException::class);
+        $this->user->assignRole('role');
 
         $this->refreshUserInstance();
 
-        $this->assertFalse($role);
+        $this->assertFalse($this->user->hasRole('role'));
     }
 
-    public function testAssigningRoleWithAnId()
+    public function testAssigningRoleWithRoleId()
     {
         $this->user->assignRole(1);
 
         $this->refreshUserInstance();
 
         $this->assertTrue($this->user->hasRole('artisan'));
+    }
+
+    public function testAssigningRoleWithRoleSlug()
+    {
+        $this->user->assignRole('editor');
+
+        $this->refreshUserInstance();
+
+        $this->assertTrue($this->user->hasRole('editor'));
+    }
+
+    public function testAssigningMultipleRolesAtOnce()
+    {
+        $this->user->assignRole('editor', 'artisan');
+
+        $this->refreshUserInstance();
+
+        $this->assertTrue($this->user->hasRole('editor'));
+        $this->assertTrue($this->user->hasRole('artisan'));
+        $this->assertFalse($this->user->hasRole('admin'));
+    }
+
+    public function testAssigningMultipleRolesAtOnceUsingIds()
+    {
+        $this->user->assignRole(1, 2);
+
+        $this->refreshUserInstance();
+
+        $this->assertTrue($this->user->hasRole('editor'));
+        $this->assertTrue($this->user->hasRole('artisan'));
+        $this->assertFalse($this->user->hasRole('admin'));
+    }
+
+    public function testAssigningMultipleRolesAtOnceViaArray()
+    {
+        $this->user->assignRole(['editor', 'artisan']);
+
+        $this->refreshUserInstance();
+
+        $this->assertTrue($this->user->hasRole('editor'));
+        $this->assertTrue($this->user->hasRole('artisan'));
+        $this->assertFalse($this->user->hasRole('admin'));
+    }
+
+    public function testAssigningMultipleRolesAtOnceUsingIdsViaArray()
+    {
+        $this->user->assignRole([1, 2]);
+
+        $this->refreshUserInstance();
+
+        $this->assertTrue($this->user->hasRole('editor'));
+        $this->assertTrue($this->user->hasRole('artisan'));
+        $this->assertFalse($this->user->hasRole('admin'));
     }
 }

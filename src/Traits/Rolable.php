@@ -4,7 +4,7 @@ namespace Bosnadev\Ronin\Traits;
 
 use Bosnadev\Ronin\Contracts\Role as RoleContract;
 use Bosnadev\Ronin\Exceptions\NoRoleProvidedException;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class Rolable
@@ -31,42 +31,45 @@ trait Rolable
     /**
      * Assign the given role to the user
      *
-     * @param int|string|\Bosnadev\Ronin\Contracts\Role $role
-     * @return bool
+     * @param array|int|string|\Bosnadev\Ronin\Contracts\Role $roles
+     * @return RoleContract|Rolable
      */
-    public function assignRole($role = null)
+    public function assignRole(...$roles)
     {
-        if(is_null($role))
-            throw new NoRoleProvidedException('You need to provide a role identifier to assign a new role.');
+        $roles = collect($roles)
+            ->flatten()
+            ->map(function ($role) {
+                return $this->getRoleIfExists($role );
+            })->all();
 
-        // Check if user already has this role
-        if(! $this->roles->contains($role)) {
-            return $this->roles()->attach($role);
-        }
+        $this->roles()->saveMany($roles);
 
-        return false;
+        return $this;
     }
 
     /**
      * Check if the user has the given role
      *
-     * @param string|array|\Bosnadev\Ronin\Contracts\Role $roles
+     * @param string||\Bosnadev\Ronin\Contracts\Role $roles
      * @return bool
      */
     public function hasRole($roles)
     {
-        if($roles instanceof RoleContract)
-            return  $this->roles->contains('id', $roles->id);
+        foreach ($this->roles as $existingRole){
+            if($roles instanceof RoleContract) {
+                return $existingRole->getId() === $roles->getId();
+            }
 
-        // We can check role existence by it's slug
-        if(is_string($roles))
-            return $this->roles->contains('slug', $roles);
+            if($roles instanceof Collection) {
+                return (bool) $roles->intersect($this->getRoles())->count();
+            }
 
-        // We can check role existence by it's ID
-        if(is_int($roles))
-            return  $this->roles->contains('id', $roles);
+            if($existingRole->getId() === $roles || $existingRole->getSlug() === $roles) {
+                return true;
+            }
+        };
 
-        return (bool) $roles->intersect($this->getRoles())->count();
+        return false;
     }
 
     /**
@@ -95,5 +98,18 @@ trait Rolable
     public function userRoleSlug($slug)
     {
         return $this->roles->contains('slug', strtolower($slug));
+    }
+
+    public function getRoleIfExists($role)
+    {
+        if(is_string($role)) {
+            return app(RoleContract::class)->findBySlug($role);
+        }
+
+        if(is_int($role)) {
+            return app(RoleContract::class)->findById($role);
+        }
+
+        return $role;
     }
 }
