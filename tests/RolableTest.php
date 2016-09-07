@@ -2,6 +2,7 @@
 
 namespace Bosnadev\Tests\Ronin;
 
+use Bosnadev\Ronin\Exceptions\NoRoleProvidedException;
 use Bosnadev\Ronin\Models\Role;
 use Bosnadev\Tests\Ronin\RoninTestCase as TestCase;
 use Illuminate\Database\Eloquent\Collection;
@@ -34,7 +35,7 @@ class RolableTest extends TestCase
         $this->assertTrue($this->user->hasRole(1));
         $this->assertFalse($this->user->hasRole(3));
         $this->assertTrue($this->user->hasAnyRole(['artisan', 'artisans']));
-        $this->assertTrue($this->user->hasRole([$role, 'artisans']));
+        $this->assertTrue($this->user->hasAnyRole([$role, 'artisans']));
         $this->assertFalse($this->user->hasAnyRole(['artisans', 'editor']));
         $this->assertCount(1, $this->user->getRoles());
         $this->assertEquals('artisan', $this->user->roles->first()->getSlug());
@@ -52,9 +53,20 @@ class RolableTest extends TestCase
 
     public function testAssigningRoleWhenNoRoleProvided()
     {
+        $this->expectException(NoRoleProvidedException::class);
         $role = $this->user->assignRole();
+
         $this->refreshUserInstance();
 
         $this->assertFalse($role);
+    }
+
+    public function testAssigningRoleWithAnId()
+    {
+        $this->user->assignRole(1);
+
+        $this->refreshUserInstance();
+
+        $this->assertTrue($this->user->hasRole('artisan'));
     }
 }
