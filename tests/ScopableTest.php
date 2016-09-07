@@ -41,6 +41,7 @@ class ScopableTest extends RoninTestCase
         $this->assertFalse($this->role->inScope(['delete']));
         $this->assertTrue($this->role->inScope('create'));
         $this->assertTrue($this->role->inScope('search'));
+
         $this->expectException(ScopeNotFound::class);
         $this->assertFalse($this->role->inScope('delete'));
         $this->assertFalse($this->role->inScope('insert'));

@@ -51,24 +51,16 @@ trait Rolable
      */
     public function hasRole($roles)
     {
-        if($roles instanceof RoleContract) {
+        if($roles instanceof RoleContract)
             return  $this->roles->contains('id', $roles->id);
-        }
 
-        if(is_string($roles)) {
+        // We can check role existence by it's slug
+        if(is_string($roles))
             return $this->roles->contains('slug', $roles);
-        }
 
-        if(is_array($roles)) {
-            foreach ($roles as $role) {
-                if($this->hasRole($role))
-                    return true;
-            }
-        }
-
-        if(is_int($roles)) {
+        // We can check role existence by it's ID
+        if(is_int($roles))
             return  $this->roles->contains('id', $roles);
-        }
 
         return (bool) $roles->intersect($this->getRoles())->count();
     }
