@@ -27,7 +27,7 @@ class Role extends Model implements RoleContract
      */
     public function scopes()
     {
-        return $this->belongsToMany(app(ScopeContract::class))->withTimestamps()->withPivot('granted');
+        return $this->belongsToMany(app(ScopeContract::class))->withTimestamps();
     }
 
     /**

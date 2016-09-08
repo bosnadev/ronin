@@ -31,7 +31,6 @@ class RoninMigration extends Migration
         Schema::create('role_scope', function (Blueprint $table) {
             $table->integer('scope_id')->unsigned();
             $table->integer('role_id')->unsigned();
-            $table->boolean('granted')->default(true);
 
             $table->foreign('scope_id')->references('id')->on('scopes')->onDelete('cascade');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
@@ -44,7 +43,6 @@ class RoninMigration extends Migration
         Schema::create('scope_user', function (Blueprint $table) {
             $table->integer('scope_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->boolean('granted')->default(true);
 
             $table->foreign('scope_id')->references('id')->on('scopes')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
