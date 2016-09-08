@@ -3,7 +3,6 @@
 namespace Bosnadev\Ronin\Traits;
 
 use Bosnadev\Ronin\Contracts\Role as RoleContract;
-use Bosnadev\Ronin\Exceptions\NoRoleProvidedException;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -47,6 +46,11 @@ trait Rolable
         return $this;
     }
 
+    /**
+     * Revoke the given role from the user
+     *
+     * @param $role
+     */
     public function revokeRole($role)
     {
         $this->roles()->detach($this->getRoleIfExists($role));
@@ -95,17 +99,13 @@ trait Rolable
     }
 
     /**
-     * Check if user have role with a given slug
+     * Check if given role if exits. If given role is an instance of a \Bosnadev\Ronin\Contracts\Role
+     * then we'll just return that instance
      *
-     * @param $slug
+     * @param $role
      * @return mixed
      */
-    public function userRoleSlug($slug)
-    {
-        return $this->roles->contains('slug', strtolower($slug));
-    }
-
-    public function getRoleIfExists($role)
+    protected function getRoleIfExists($role)
     {
         if(is_string($role)) {
             return app(RoleContract::class)->findBySlug($role);

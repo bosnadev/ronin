@@ -41,16 +41,6 @@ class RolableTest extends TestCase
         $this->assertEquals('artisan', $this->user->roles->first()->getSlug());
     }
 
-    public function testIfUserHaveRoleWithAGivenSlug()
-    {
-        $this->user->assignRole(1);
-
-        $this->refreshUserInstance();
-
-        $role = Role::find(1);
-        $this->assertTrue($this->user->userRoleSlug($role->slug));
-    }
-
     public function testWhatHappensWhenWeTryToAssignNonExistingRoleSlug()
     {
         $this->expectException(RoleNotFoundException::class);
