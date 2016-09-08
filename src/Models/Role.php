@@ -16,9 +16,9 @@ class Role extends Model implements RoleContract
         'name', 'slug', 'description'
     ];
 
-    static $userModel;
+    public static $userModel;
 
-    static $scopeModel;
+    public static $scopeModel;
 
     /**
      * A Role can be assigned with scopes

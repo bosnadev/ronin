@@ -23,10 +23,4 @@ class Ronin
     {
         $this->auth = $auth;
     }
-
-    public function getRoles()
-    {
-        return $this->auth->user();
-        return collect(['admin', 'artisan', 'ronin']);
-    }
 }
