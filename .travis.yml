@@ -20,7 +20,9 @@ before_script:
 script:
   - vendor/bin/phpunit --verbose --coverage-text --coverage-clover=coverage.xml
 
-after_script: ./codeclimate.sh
+after_script:
+  - vendor/bin/test-reporter --stdout > codeclimate.json
+  - "curl -X POST -d @codeclimate.json -H 'Content-Type: application/json' -H 'User-Agent: Code Climate (PHP Test Reporter v0.1.1)' https://codeclimate.com/test_reports"
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
