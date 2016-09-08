@@ -149,4 +149,20 @@ class RolableTest extends TestCase
         // make sure we removed the role from the user
         $this->assertFalse($this->user->hasRole('artisan'));
     }
+
+    public function testSyncUserRoles()
+    {
+        $this->user->assignRole($this->role);
+        $this->refreshUserInstance();
+
+        $this->assertTrue($this->user->hasRole($this->role));
+
+        //$this->user->syncRoles($this->role, $this->role2);
+        $this->user->syncRoles('artisan', 2);
+
+        $this->refreshUserInstance();
+
+        $this->assertTrue($this->user->hasRole('artisan'));
+        $this->assertTrue($this->user->hasRole('editor'));
+    }
 }

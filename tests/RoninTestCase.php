@@ -109,7 +109,7 @@ abstract class RoninTestCase extends TestCase
     protected function refreshRoleInstance()
     {
         $this->role = Role::first();
-        $this->role2 = Role::find(2);
+        $this->role2 = Role::where('slug', 'editor')->first();
     }
 
     protected function refreshScopeInstance()
