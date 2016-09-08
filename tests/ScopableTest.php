@@ -9,7 +9,8 @@ class ScopableTest extends RoninTestCase
 {
     public function testIfUserHasRoleScope()
     {
-        $this->role->addScope('create', 'search');
+        $this->role->addScope('create');
+        $this->role->addScope('search');
         $this->user->assignRole(1);
 
         $this->refreshRoleInstance();
@@ -33,7 +34,8 @@ class ScopableTest extends RoninTestCase
 
     public function testGivePermissionToRole()
     {
-        $this->role->addScope('create', 'search');
+        $this->role->addScope('create');
+        $this->role->addScope('search');
 
         $this->refreshRoleInstance();
         $this->refreshScopeInstance();

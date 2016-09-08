@@ -11,18 +11,18 @@ trait Scopable
      */
     public function scopes()
     {
-        return $this->belongsToMany(app(Scope::class))->withTimestamps()->withPivot('granted');
+        return $this->belongsToMany(app(Scope::class))->withTimestamps();
     }
 
     /**
      * Grant the provided Scope to a Role
      *
-     * @param array $scopes
+     * @param array $scope
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function addScope(...$scopes)
+    public function addScope($scope)
     {
-        $scopes = collect($scopes)
+        $scope = collect($scope)
             ->filter(function ($scope) {
                 if((bool) $this->scopeExists($scope)) {
                     return $scope;
@@ -30,11 +30,17 @@ trait Scopable
             })
             ->map(function ($scope) {
                 return $this->scopeExists($scope);
-        })->all();
+        })->first();
 
-        $this->scopes()->saveMany($scopes);
+        $this->scopes()->save($scope);
     }
 
+    /**
+     * Check if the role or the user has the given scope
+     *
+     * @param $scope
+     * @return bool
+     */
     public function inScope($scope)
     {
         if(is_array($scope))
@@ -45,14 +51,11 @@ trait Scopable
             $scope = $this->scopeExists($scope);
         }
 
-        return (
-            ($this->hasValidDirectScope($scope) || $this->hasRoleScope($scope))
-            && ! $this->hasInvalidDirectScope($scope)
-        );
+        return ($this->hasUserScope($scope) || $this->hasRoleScope($scope));
     }
 
     /**
-     * Test if a role has given scope
+     * Check if the role has a given scope
      *
      * @param Scope $scope
      * @return bool
@@ -68,15 +71,23 @@ trait Scopable
         return false;
     }
 
-    protected function hasValidDirectScope(Scope $scope)
+    /**
+     * If the user has a given scope, it'll override the users role scope
+     *
+     * @param Scope $scope
+     * @return bool
+     */
+    protected function hasUserScope(Scope $scope)
     {
-        return $this->scopes->contains('slug', $scope->slug) && $this->scopes->contains('pivot.granted', 1);
+        return $this->scopes->contains('slug', $scope->slug);
     }
 
-    protected function hasInvalidDirectScope(Scope $scope)
-    {
-    }
-
+    /**
+     * Check if a given scope exists
+     *
+     * @param $scope
+     * @return mixed
+     */
     protected function scopeExists($scope)
     {
         return app(Scope::class)->findBySlug($scope);
