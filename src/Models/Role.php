@@ -2,11 +2,11 @@
 
 namespace Bosnadev\Ronin\Models;
 
-use Bosnadev\Ronin\Exceptions\RoleNotFoundException;
 use Bosnadev\Ronin\Traits\Scopable;
 use Illuminate\Database\Eloquent\Model;
 use Bosnadev\Ronin\Contracts\Role as RoleContract;
 use Bosnadev\Ronin\Contracts\Scope as ScopeContract;
+use Bosnadev\Ronin\Exceptions\RoleNotFoundException;
 
 class Role extends Model implements RoleContract
 {
