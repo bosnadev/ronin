@@ -18,7 +18,8 @@
     "illuminate/session": "~5.0",
     "mockery/mockery": "~0.9",
     "phpunit/phpunit": "~5.0",
-    "orchestra/testbench": "^3.3"
+    "orchestra/testbench": "^3.3",
+    "codeclimate/php-test-reporter": "^0.3.2"
   },
   "autoload": {
     "classmap": [
