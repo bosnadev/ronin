@@ -13,6 +13,7 @@ trait Scopable
     {
         return $this->belongsToMany(app(Scope::class))->withTimestamps()->withPivot('granted');
     }
+
     /**
      * Grant the provided Scope to a Role
      *

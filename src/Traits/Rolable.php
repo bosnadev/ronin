@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Collection;
  */
 trait Rolable
 {
+    use Scopable;
+
     /**
      * @return mixed
      */
@@ -44,6 +46,19 @@ trait Rolable
         $this->roles()->saveMany($roles);
 
         return $this;
+    }
+
+    /**
+     * Synchronise user roles with a new ones
+     *
+     * @param array|string|int|\Bosnadev\Ronin\Contracts\Role ...$roles
+     * @return RoleContract|Rolable
+     */
+    public function syncRoles(...$roles)
+    {
+        $this->roles()->detach();
+
+        return $this->assignRole($roles);
     }
 
     /**
