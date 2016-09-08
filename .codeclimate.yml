@@ -5,7 +5,6 @@ languages:
   Python: false
   PHP: true
 exclude_paths:
-  - tests/*
   - vendor/*
   - config/*
   - database/*
