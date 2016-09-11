@@ -2,10 +2,10 @@
 
 namespace Bosnadev\Tests\Ronin;
 
-use Bosnadev\Ronin\Exceptions\RoleNotFoundException;
+use Illuminate\Database\Eloquent\Collection;
 use Bosnadev\Ronin\Models\Role;
 use Bosnadev\Tests\Ronin\RoninTestCase as TestCase;
-use Illuminate\Database\Eloquent\Collection;
+use Bosnadev\Ronin\Exceptions\RoleNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class RolableTest extends TestCase
@@ -26,19 +26,53 @@ class RolableTest extends TestCase
     public function testUserHasRole()
     {
         $this->user->assignRole(1);
+        $role = Role::find(1);
 
         $this->refreshUserInstance();
 
-        $role = Role::find(1);
-        $this->assertTrue($this->user->hasRole('artisan'));
         $this->assertTrue($this->user->hasRole($role));
         $this->assertTrue($this->user->hasRole(1));
-        $this->assertFalse($this->user->hasRole(3));
+        $this->assertTrue($this->user->hasRole('artisan'));
+        $this->assertEquals('artisan', $this->user->roles->first()->getSlug());
+    }
+
+    public function testUserHasAnyOfTheGivenRoles()
+    {
+        $this->user->assignRole(1);
+        $role = Role::find(1);
+
+        $this->refreshUserInstance();
+
         $this->assertTrue($this->user->hasAnyRole(['artisan', 'artisans']));
         $this->assertTrue($this->user->hasAnyRole([$role, 'artisans']));
-        $this->assertFalse($this->user->hasAnyRole(['artisans', 'editor']));
+    }
+
+    public function testUserBelongsToOneRole()
+    {
+        $this->user->assignRole(1);
+
+        $this->refreshUserInstance();
+
         $this->assertCount(1, $this->user->getRoles());
-        $this->assertEquals('artisan', $this->user->roles->first()->getSlug());
+    }
+
+    public function testUserDoesNotHaveARole()
+    {
+        $role = Role::find(1);
+
+        $this->assertFalse($this->user->hasRole($role));
+        $this->assertFalse($this->user->hasRole(1));
+        $this->assertFalse($this->user->hasRole('artisan'));
+    }
+
+    public function testUserDosNotHaveAnyOfTheGiveRoles()
+    {
+        $role1 = Role::find(1);
+        $role2 = Role::find(2);
+
+        $this->assertFalse($this->user->hasAnyRole([$role1, $role2]));
+        $this->assertFalse($this->user->hasAnyRole([1, 2]));
+        $this->assertFalse($this->user->hasAnyRole(['artisans', 'editor']));
     }
 
     public function testWhatHappensWhenWeTryToAssignNonExistingRoleSlug()
@@ -55,7 +89,6 @@ class RolableTest extends TestCase
     {
         $this->expectException(RoleNotFoundException::class);
         $this->user->assignRole(15);
-
         $this->refreshUserInstance();
 
         $this->assertFalse($this->user->hasRole(15));
