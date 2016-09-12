@@ -8,23 +8,23 @@ use Bosnadev\Ronin\Contracts\Role as RoleContract;
 
 class ScopableTest extends RoninTestCase
 {
-    public function testIfUserHasRoleScope()
+    public function testUserHasRoleScope()
     {
         $this->role->addScope('create');
         $this->role->addScope('search');
         $this->user->assignRole(1);
 
-        $this->refreshRoleInstance();
-        $this->refreshUserInstance();
-        $this->refreshScopeInstance();
-
         $this->assertTrue($this->user->inScope('search'));
-        $this->assertFalse($this->user->inScope('edit'));
         $this->seeInDatabase('role_scope', ['scope_id' => app(Scope::class)->where('slug', 'search')->first()->id]);
+    }
+
+    public function testUserDoesNotHaveRoleScope()
+    {
+        $this->assertFalse($this->user->inScope('edit'));
         $this->dontSeeInDatabase('role_scope', ['scope_id' => app(Scope::class)->where('slug', 'edit')->first()->id]);
     }
 
-    public function testIfUserHasRoleScopeInMultipleRoles()
+    public function testUserHasRoleScopeInMultipleRoles()
     {
         $this->role->addScope('create');
         $this->role2->addScope('search');
@@ -38,6 +38,10 @@ class ScopableTest extends RoninTestCase
 
         $this->assertTrue($this->user->inScope('search'));
         $this->assertTrue($this->user->inScope('create'));
+    }
+
+    public function testUserDoesNotHaveRoleScopeInAnyRole()
+    {
         $this->assertFalse($this->user->inScope('delete'));
     }
 
