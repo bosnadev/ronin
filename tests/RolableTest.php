@@ -2,8 +2,8 @@
 
 namespace Bosnadev\Tests\Ronin;
 
-use Illuminate\Database\Eloquent\Collection;
 use Bosnadev\Ronin\Models\Role;
+use Illuminate\Database\Eloquent\Collection;
 use Bosnadev\Tests\Ronin\RoninTestCase as TestCase;
 use Bosnadev\Ronin\Exceptions\RoleNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -89,6 +89,7 @@ class RolableTest extends TestCase
     {
         $this->expectException(RoleNotFoundException::class);
         $this->user->assignRole(15);
+
         $this->refreshUserInstance();
 
         $this->assertFalse($this->user->hasRole(15));
