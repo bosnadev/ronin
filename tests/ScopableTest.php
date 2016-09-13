@@ -65,7 +65,7 @@ class ScopableTest extends RoninTestCase
         $this->assertFalse($this->role->inScope('insert'));
     }
 
-    public function testIfUserHasDirectPermission()
+    public function testIfUserHasDirectScope()
     {
         $this->user->addScope('edit');
 
@@ -75,11 +75,18 @@ class ScopableTest extends RoninTestCase
         $this->assertFalse($this->user->inScope('delete'));
     }
 
-    public function testFindPermissionById()
+    public function testFindScopeById()
     {
         $scope = app(Scope::class)->findById(1);
 
         $this->seeInDatabase('scopes', ['id' => $scope->id]);
+    }
+
+    public function testFindScopeBySlug()
+    {
+        $scope = app(Scope::class)->findBySlug('edit');
+
+        $this->seeInDatabase('scopes', ['slug' => $scope->slug]);
     }
 
     public function testFindScopeByName()
