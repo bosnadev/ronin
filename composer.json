@@ -1,9 +1,9 @@
 {
-  "name": "bosnadev/ronin",
-  "description": "Laravel ACL package. Roles & Permissions for the Laravel's native Auth",
+  "name": "connectum/ronin",
+  "description": "Laravel ACL package. Roles & Scopes for the Laravel's native Auth",
   "keywords": ["laravel", "eloquent", "roles", "scopes", "permissions", "acl", "auth"],
   "license": "MIT",
-  "homepage": "https://bosnadev.com",
+  "homepage": "https://ronin.connectum.io",
   "authors": [
     {
       "name": "Mirza Pasic",
