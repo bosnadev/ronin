@@ -1,6 +1,6 @@
 <?php
 
-namespace Bosnadev\Ronin\Contracts;
+namespace Connectum\Ronin\Contracts;
 
 interface Role
 {

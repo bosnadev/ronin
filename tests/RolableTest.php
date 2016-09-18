@@ -1,11 +1,11 @@
 <?php
 
-namespace Bosnadev\Tests\Ronin;
+namespace Connectum\Tests\Ronin;
 
-use Bosnadev\Ronin\Models\Role;
+use Connectum\Ronin\Models\Role;
 use Illuminate\Database\Eloquent\Collection;
-use Bosnadev\Tests\Ronin\RoninTestCase as TestCase;
-use Bosnadev\Ronin\Exceptions\RoleNotFoundException;
+use Connectum\Tests\Ronin\RoninTestCase as TestCase;
+use Connectum\Ronin\Exceptions\RoleNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class RolableTest extends TestCase

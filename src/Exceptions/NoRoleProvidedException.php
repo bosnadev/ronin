@@ -1,6 +1,6 @@
 <?php
 
-namespace Bosnadev\Ronin\Exceptions;
+namespace Connectum\Ronin\Exceptions;
 
 use RuntimeException;
 

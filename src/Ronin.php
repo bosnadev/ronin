@@ -1,12 +1,12 @@
 <?php
 
-namespace Bosnadev\Ronin;
+namespace Connectum\Ronin;
 
 use Illuminate\Contracts\Auth\Guard;
 
 /**
  * Class Ronin
- * @package Bosnadev\Ronin
+ * @package Connectum\Ronin
  */
 class Ronin
 {

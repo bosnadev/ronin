@@ -29,8 +29,8 @@
       "database"
     ],
     "psr-4": {
-      "Bosnadev\\Ronin\\": "src/",
-      "Bosnadev\\Tests\\Ronin\\": "tests/"
+      "Connectum\\Ronin\\": "src/",
+      "Connectum\\Tests\\Ronin\\": "tests/"
     }
   },
   "scripts": {

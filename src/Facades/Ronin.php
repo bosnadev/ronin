@@ -1,6 +1,6 @@
 <?php
 
-namespace Bosnadev\Ronin\Facades;
+namespace Connectum\Ronin\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

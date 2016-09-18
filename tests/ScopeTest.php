@@ -1,8 +1,8 @@
 <?php
 
-namespace Bosnadev\Tests\Ronin;
+namespace Connectum\Tests\Ronin;
 
-use Bosnadev\Tests\Ronin\RoninTestCase as TestCase;
+use Connectum\Tests\Ronin\RoninTestCase as TestCase;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 

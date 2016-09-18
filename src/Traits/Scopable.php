@@ -1,8 +1,8 @@
 <?php
 
-namespace Bosnadev\Ronin\Traits;
+namespace Connectum\Ronin\Traits;
 
-use Bosnadev\Ronin\Contracts\Scope;
+use Connectum\Ronin\Contracts\Scope;
 
 trait Scopable
 {

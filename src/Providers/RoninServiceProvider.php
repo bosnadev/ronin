@@ -1,12 +1,12 @@
 <?php
 
-namespace Bosnadev\Ronin\Providers;
+namespace Connectum\Ronin\Providers;
 
-use Bosnadev\Ronin\Ronin;
+use Connectum\Ronin\Ronin;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\ServiceProvider;
-use Bosnadev\Ronin\Contracts\Role as RoleContract;
-use Bosnadev\Ronin\Contracts\Scope as ScopeContract;
+use Connectum\Ronin\Contracts\Role as RoleContract;
+use Connectum\Ronin\Contracts\Scope as ScopeContract;
 
 class RoninServiceProvider extends ServiceProvider
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Bosnadev\Ronin\Traits;
+namespace Connectum\Ronin\Traits;
 
-use Bosnadev\Ronin\Contracts\Role as RoleContract;
+use Connectum\Ronin\Contracts\Role as RoleContract;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class Rolable
- * @package Bosnadev\Ronin\Traits
+ * @package Connectum\Ronin\Traits
  */
 trait Rolable
 {
@@ -32,7 +32,7 @@ trait Rolable
     /**
      * Assign the given role to the user
      *
-     * @param array|int|string|\Bosnadev\Ronin\Contracts\Role $roles
+     * @param array|int|string|\Connectum\Ronin\Contracts\Role $roles
      * @return RoleContract|Rolable
      */
     public function assignRole(...$roles)
@@ -51,7 +51,7 @@ trait Rolable
     /**
      * Synchronise user roles with a new ones
      *
-     * @param array|string|int|\Bosnadev\Ronin\Contracts\Role ...$roles
+     * @param array|string|int|\Connectum\Ronin\Contracts\Role ...$roles
      * @return RoleContract|Rolable
      */
     public function syncRoles(...$roles)
@@ -74,7 +74,7 @@ trait Rolable
     /**
      * Check if the user has the given role
      *
-     * @param string||\Bosnadev\Ronin\Contracts\Role $roles
+     * @param string||\Connectum\Ronin\Contracts\Role $roles
      * @return bool
      */
     public function hasRole($roles)
@@ -114,7 +114,7 @@ trait Rolable
     }
 
     /**
-     * Check if given role if exits. If given role is an instance of a \Bosnadev\Ronin\Contracts\Role
+     * Check if given role if exits. If given role is an instance of a \Connectum\Ronin\Contracts\Role
      * then we'll just return that instance
      *
      * @param $role

@@ -1,10 +1,10 @@
 <?php
 
-namespace Bosnadev\Tests\Ronin;
+namespace Connectum\Tests\Ronin;
 
-use Bosnadev\Ronin\Contracts\Scope;
-use Bosnadev\Ronin\Exceptions\ScopeNotFound;
-use Bosnadev\Ronin\Contracts\Role as RoleContract;
+use Connectum\Ronin\Contracts\Scope;
+use Connectum\Ronin\Exceptions\ScopeNotFound;
+use Connectum\Ronin\Contracts\Role as RoleContract;
 
 class ScopableTest extends RoninTestCase
 {

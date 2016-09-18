@@ -1,12 +1,12 @@
 <?php
 
-namespace Bosnadev\Tests\Ronin;
+namespace Connectum\Tests\Ronin;
 
 use Mockery as m;
-use Bosnadev\Ronin\Models\Role;
-use Bosnadev\Ronin\Models\Scope;
+use Connectum\Ronin\Models\Role;
+use Connectum\Ronin\Models\Scope;
 use Orchestra\Testbench\TestCase;
-use Bosnadev\Ronin\Providers\RoninServiceProvider;
+use Connectum\Ronin\Providers\RoninServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 
 abstract class RoninTestCase extends TestCase

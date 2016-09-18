@@ -1,12 +1,12 @@
 <?php
 
-namespace Bosnadev\Ronin\Models;
+namespace Connectum\Ronin\Models;
 
-use Bosnadev\Ronin\Traits\Scopable;
+use Connectum\Ronin\Traits\Scopable;
 use Illuminate\Database\Eloquent\Model;
-use Bosnadev\Ronin\Contracts\Role as RoleContract;
-use Bosnadev\Ronin\Contracts\Scope as ScopeContract;
-use Bosnadev\Ronin\Exceptions\RoleNotFoundException;
+use Connectum\Ronin\Contracts\Role as RoleContract;
+use Connectum\Ronin\Contracts\Scope as ScopeContract;
+use Connectum\Ronin\Exceptions\RoleNotFoundException;
 
 class Role extends Model implements RoleContract
 {

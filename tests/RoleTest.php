@@ -1,12 +1,12 @@
 <?php
 
-namespace Bosnadev\Tests\Ronin;
+namespace Connectum\Tests\Ronin;
 
 use Mockery as m;
 use Illuminate\Support\Str;
-use Bosnadev\Ronin\Models\Role;
-use Bosnadev\Ronin\Models\Scope;
-use Bosnadev\Tests\Ronin\RoninTestCase as TestCase;
+use Connectum\Ronin\Models\Role;
+use Connectum\Ronin\Models\Scope;
+use Connectum\Tests\Ronin\RoninTestCase as TestCase;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class RoleTest extends TestCase

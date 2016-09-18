@@ -1,10 +1,10 @@
 <?php
 
-namespace Bosnadev\Ronin\Models;
+namespace Connectum\Ronin\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Bosnadev\Ronin\Exceptions\ScopeNotFound;
-use Bosnadev\Ronin\Contracts\Scope as ScopeContract;
+use Connectum\Ronin\Exceptions\ScopeNotFound;
+use Connectum\Ronin\Contracts\Scope as ScopeContract;
 
 class Scope extends Model implements ScopeContract
 {
