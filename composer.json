@@ -27,7 +27,7 @@
   "autoload": {
     "classmap": [
       "database",
-      "tests/TestCase.php"
+      "tests/RoninTestCase.php"
     ],
     "psr-4": {
       "Connectum\\Ronin\\": "src/",
