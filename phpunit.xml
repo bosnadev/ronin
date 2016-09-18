@@ -11,7 +11,7 @@
          syntaxCheck="false"
 >
     <testsuites>
-        <testsuite name="Ronin Test Suite">
+        <testsuite name="Connectum Ronin Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
