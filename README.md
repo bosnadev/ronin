@@ -1,9 +1,9 @@
 # Laravel Ronin - a missing part of the Laravel's ACL
 
-[![Build Status](https://travis-ci.org/bosnadev/ronin.svg?branch=master)](https://travis-ci.org/bosnadev/ronin)
-[![Code Climate](https://codeclimate.com/github/bosnadev/ronin/badges/gpa.svg)](https://codeclimate.com/github/bosnadev/ronin)
-[![Test Coverage](https://codeclimate.com/github/bosnadev/ronin/badges/coverage.svg)](https://codeclimate.com/github/bosnadev/ronin/coverage)
-[![codecov](https://codecov.io/gh/bosnadev/ronin/branch/master/graph/badge.svg)](https://codecov.io/gh/bosnadev/ronin)
+[![Build Status](https://travis-ci.org/connectum/ronin.svg?branch=master)](https://travis-ci.org/connectum/ronin)
+[![Code Climate](https://codeclimate.com/github/connectum/ronin/badges/gpa.svg)](https://codeclimate.com/github/connectum/ronin)
+[![Test Coverage](https://codeclimate.com/github/connectum/ronin/badges/coverage.svg)](https://codeclimate.com/github/connectum/ronin/coverage)
+[![codecov](https://codecov.io/gh/connectum/ronin/branch/master/graph/badge.svg)](https://codecov.io/gh/connectum/ronin)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/9bcc0245-b643-487f-9915-cb471cc590eb/mini.png)](https://insight.sensiolabs.com/projects/9bcc0245-b643-487f-9915-cb471cc590eb)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg)](https://tldrlegal.com/license/mit-license)
 
@@ -23,7 +23,7 @@
 In the terminal run the following composer command to include this package:
 
 ```shell
-composer require bosnadev/ronin
+composer require connectum/ronin
 ```
 
 #### Laravel 5.2 Setup
@@ -40,4 +40,4 @@ This package is maintained by [Mirza Pasic](http://bosnadev.com).
 
 ### License
 
-This package is licensed under the [MIT license](https://github.com/bosnadev/ronin/blob/master/LICENSE).
+This package is licensed under the [MIT license](https://github.com/connectum/ronin/blob/master/LICENSE).
