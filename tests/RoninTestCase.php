@@ -6,8 +6,8 @@ use Mockery as m;
 use Connectum\Ronin\Models\Role;
 use Connectum\Ronin\Models\Scope;
 use Orchestra\Testbench\TestCase;
-use Connectum\Ronin\Providers\RoninServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
+use Connectum\Ronin\Providers\RoninServiceProvider;
 
 abstract class RoninTestCase extends TestCase
 {
