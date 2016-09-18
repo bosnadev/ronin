@@ -4,7 +4,7 @@
 [![Code Climate](https://codeclimate.com/github/connectum/ronin/badges/gpa.svg)](https://codeclimate.com/github/connectum/ronin)
 [![Test Coverage](https://codeclimate.com/github/connectum/ronin/badges/coverage.svg)](https://codeclimate.com/github/connectum/ronin/coverage)
 [![codecov](https://codecov.io/gh/connectum/ronin/branch/master/graph/badge.svg)](https://codecov.io/gh/connectum/ronin)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/9bcc0245-b643-487f-9915-cb471cc590eb/mini.png)](https://insight.sensiolabs.com/projects/9bcc0245-b643-487f-9915-cb471cc590eb)
+[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/9bcc0245-b643-487f-9915-cb471cc590eb.svg?style=flat)](https://insight.sensiolabs.com/projects/9bcc0245-b643-487f-9915-cb471cc590eb)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg)](https://tldrlegal.com/license/mit-license)
 
 
