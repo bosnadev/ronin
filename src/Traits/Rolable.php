@@ -4,6 +4,7 @@ namespace Connectum\Ronin\Traits;
 
 use Connectum\Ronin\Contracts\Role as RoleContract;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 
 /**
  * Class Rolable
@@ -123,7 +124,7 @@ trait Rolable
     protected function getRoleIfExists($role)
     {
         if(is_string($role)) {
-            return app(RoleContract::class)->findBySlug($role);
+            return app(RoleContract::class)->findBySlug(Str::lower($role));
         }
 
         if(is_int($role)) {
